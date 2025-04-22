@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('titulo', 'Mindcologist')</title>
-    @vite('resources/css/app.css') <!-- Tailwind via Vite -->
+
+    {{-- CSS principal via Vite --}}
+    @vite('resources/css/app.css')
+
+    {{-- Slot para scripts específicos da view --}}
+    @stack('head-scripts')
 </head>
-<body class="bg-gray-50 text-gray-900 min-h-screen">
+<body class="bg-gray-50 text-gray-900 min-h-screen w-full overflow-x-hidden">
 
     {{-- Cabeçalho --}}
     <header class="bg-gray-100 border-b border-gray-300">
@@ -22,10 +27,16 @@
         </div>
     </header>
 
-    {{-- Conteúdo da página --}}
-    <main class="p-6">
+    {{-- Conteúdo da página --}}    
+    <main class="p-6 w-full">
+
         @yield('conteudo')
     </main>
 
+    {{-- Scripts comuns --}}
+    @vite('resources/js/app.js')
+
+    {{-- Scripts específicos da view --}}
+    @stack('scripts')
 </body>
 </html>
