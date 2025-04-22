@@ -3,6 +3,8 @@
 @section('conteudo')
 
 <div class="bg-white py-12 px-6">
+
+    <!-- Bem vindo -->
     <div class="max-w-7xl mx-auto text-center">
         <h1 class="text-4xl md:text-5xl font-bold text-indigo-700 mb-4">
             Bem-vindo ao Mindcologist 🧠
@@ -15,7 +17,6 @@
         </a>
     </div>
 
-    <!-- Blocos temáticos -->
     <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         <div class="bg-indigo-50 rounded-2xl p-6 shadow hover:shadow-lg transition">
             <h3 class="text-xl font-semibold text-indigo-800 mb-2">🧘‍♀️ Meditação</h3>
@@ -30,8 +31,7 @@
             <p class="text-gray-600">Reflexões e orientações para entender sua mente.</p>
         </div>
     </div>
-
-    <!-- Seção extra (opcional) -->
+    
     <div class="mt-20 bg-indigo-100 p-8 rounded-2xl text-center">
         <h2 class="text-2xl font-bold text-indigo-800 mb-4">🌿 Um espaço para sua mente respirar</h2>
         <p class="text-gray-700 max-w-3xl mx-auto">
@@ -40,10 +40,8 @@
     </div>
 </div>
 
-<div 
-    class="relative h-[60vh] bg-fixed bg-center bg-cover flex items-center justify-center" 
-    style='background-image: url("{{ asset("img/nature.jpg") }}");'
->
+<!-- Tags,imagem -->
+<div class="relative h-[60vh] bg-fixed bg-center bg-cover flex items-center justify-center" style='background-image: url("{{ asset("img/nature.jpg") }}");'>
 
     <div class="absolute inset-0 bg-white/30 backdrop-blur-md z-0"></div>
 
@@ -55,35 +53,29 @@
         <div id="tags-component" class="space-y-6">
              
             <div id="selected-tags" class="flex flex-wrap justify-center gap-3 min-h-[2rem] transition-all duration-300"></div>
-
-            
+        
             <!-- Todas as tags -->
-            <div id="all-tags" class="flex flex-wrap justify-center gap-3">
+            <div id="all-tags" class="h-40 overflow-y-auto flex flex-wrap justify-center gap-3">
                 @php
                 $tags = ['Meditação', 'Mindfulness', 'Autoconhecimento', 'Respiração', 'Ansiedade', 'Sono'];
                 @endphp
                 
                 
                 @foreach ($tags as $tag)
-                <span 
-                class="tag px-4 py-2 bg-indigo-100 text-indigo-800 rounded-xl cursor-pointer transition duration-300 hover:bg-indigo-200"
-                data-tag="{{ $tag }}"
-                >
-                {{ $tag }}
-            </span>
-            @endforeach
-        </div>
-        <div id="accept-button-wrapper" class="flex justify-center mt-4 opacity-0 scale-90 transition duration-300 pointer-events-none">
-            <button class="bg-indigo-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">
-                Aceitar Seleção
-            </button>
-        </div>
-    </div>
-    
+                <span class="tag px-4 py-2 bg-indigo-100 text-indigo-800 rounded-xl cursor-pointer transition duration-300 hover:bg-indigo-200 h-10" data-tag="{{ $tag }}">
+                    {{ $tag }}
+                </span>
+                @endforeach
+            </div>
 
+            <div id="accept-button-wrapper" class="flex justify-center mt-4 opacity-0 scale-90 transition duration-300 pointer-events-none">
+                <button class="bg-indigo-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">
+                    Aceitar Seleção
+                </button>
+            </div>
+        </div>
     </div>
 </div>
-
 
 @push('scripts')
     @vite('resources/js/home.js')

@@ -26,16 +26,14 @@ export function setupMultiTagSelector(containerId = 'tags-component') {
         tagEl.addEventListener('click', () => {
             selected.delete(valueToAdd);
 
-            // anima a saída
             tagEl.classList.add('opacity-0', '-translate-y-2');
             tagEl.classList.remove('translate-y-0');
 
             setTimeout(() => {
                 tagEl.remove();
 
-                // Recriar tag embaixo
                 const restored = document.createElement('span');
-                restored.className = 'tag px-4 py-2 bg-indigo-100 text-indigo-800 rounded-xl cursor-pointer transition duration-300 hover:bg-indigo-200 opacity-0 scale-90';
+                restored.className = 'tag px-4 py-2 bg-indigo-100 text-indigo-800 rounded-xl cursor-pointer transition duration-300 hover:bg-indigo-200 h-10';
                 restored.dataset.tag = valueToAdd;
                 restored.textContent = valueToAdd;
 

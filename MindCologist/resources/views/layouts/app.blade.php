@@ -29,7 +29,6 @@
 
     {{-- Conteúdo da página --}}    
     <main class="p-6 w-full">
-
         @yield('conteudo')
     </main>
 
