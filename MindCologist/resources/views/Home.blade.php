@@ -57,9 +57,8 @@
             <!-- Todas as tags -->
             <div id="all-tags" class="h-40 overflow-y-auto flex flex-wrap justify-center gap-3">
                 @php
-                $tags = ['Meditação', 'Mindfulness', 'Autoconhecimento', 'Respiração', 'Ansiedade', 'Sono'];
-                @endphp
-                
+                $tags = ['Meditação', 'Mindfulness', 'Autoconhecimento', 'Respiração', 'Ansiedade', 'Falta de Sono'];
+                @endphp                
                 
                 @foreach ($tags as $tag)
                 <span class="tag px-4 py-2 bg-indigo-100 text-indigo-800 rounded-xl cursor-pointer transition duration-300 hover:bg-indigo-200 h-10" data-tag="{{ $tag }}">
@@ -76,6 +75,42 @@
         </div>
     </div>
 </div>
+
+@php
+$cards = [
+    [
+        'imagem' => 'autoestima.png',
+        'titulo' => 'Autoestima',
+        'descricao' => 'Dicas e reflexões para melhorar sua autoestima.',
+    ],
+    [
+        'imagem' => 'ansiedade.png',
+        'titulo' => 'Ansiedade',
+        'descricao' => 'Técnicas para lidar com momentos de ansiedade.',
+    ],
+    [
+        'imagem' => 'sono.png',
+        'titulo' => 'Qualidade do Sono',
+        'descricao' => 'Rotinas e hábitos para dormir melhor.',
+    ],
+];
+@endphp
+
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    @foreach ($cards as $card)
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+            <div class="h-40 bg-indigo-100 flex items-center justify-center">
+                <img src="{{ asset('img/cards/' . $card['imagem']) }}" alt="{{ $card['titulo'] }}" class="h-full object-contain">
+            </div>
+            <div class="p-4 text-center">
+                <h3 class="text-lg font-semibold text-indigo-800">{{ $card['titulo'] }}</h3>
+                <p class="text-gray-600 text-sm mt-2">{{ $card['descricao'] }}</p>
+            </div>
+        </div>
+    @endforeach
+</div>
+
 
 @push('scripts')
     @vite('resources/js/home.js')
