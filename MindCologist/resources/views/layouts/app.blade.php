@@ -28,7 +28,7 @@
     </header>
 
     {{-- Conteúdo da página --}}    
-    <main class="p-6 w-full">
+    <main>
         @yield('conteudo')
     </main>
 

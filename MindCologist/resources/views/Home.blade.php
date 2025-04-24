@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('titulo', 'Início - Mindcologist')
 @section('conteudo')
+<script src="//unpkg.com/alpinejs" defer></script>
 
 <div class="bg-white py-12 px-6">
 
@@ -12,7 +13,7 @@
         <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
             Um espaço acolhedor para explorar o autoconhecimento, reduzir a ansiedade e praticar mindfulness com conteúdo feito para você.
         </p>
-        <a href="#" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">
+        <a href="#comeco" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">
             Comece sua jornada
         </a>
     </div>
@@ -30,6 +31,30 @@
             <h3 class="text-xl font-semibold text-indigo-800 mb-2">🔍 Autoconhecimento</h3>
             <p class="text-gray-600">Reflexões e orientações para entender sua mente.</p>
         </div>
+        <div class="bg-indigo-50 rounded-2xl p-6 shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold text-indigo-800 mb-2">💬 Comunicação Não-Violenta</h3>
+            <p class="text-gray-600">Aprenda a se expressar com empatia e escuta ativa.</p>
+        </div>
+        <div class="bg-indigo-50 rounded-2xl p-6 shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold text-indigo-800 mb-2">💡 Inteligência Emocional</h3>
+            <p class="text-gray-600">Desenvolva consciência e controle sobre suas emoções.</p>
+        </div>
+        <div class="bg-indigo-50 rounded-2xl p-6 shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold text-indigo-800 mb-2">❤️ Autocuidado</h3>
+            <p class="text-gray-600">Rotinas e atitudes para cuidar de você no dia a dia.</p>
+        </div>
+        <div class="bg-indigo-50 rounded-2xl p-6 shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold text-indigo-800 mb-2">😴 Higiene do Sono</h3>
+            <p class="text-gray-600">Crie hábitos que favorecem um sono mais tranquilo e restaurador.</p>
+        </div>
+        <div class="bg-indigo-50 rounded-2xl p-6 shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold text-indigo-800 mb-2">🤝 Relacionamentos Saudáveis</h3>
+            <p class="text-gray-600">Dicas para desenvolver vínculos equilibrados e respeitosos.</p>
+        </div>
+        <div class="bg-indigo-50 rounded-2xl p-6 shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold text-indigo-800 mb-2">🧩 Gestão do Estresse</h3>
+            <p class="text-gray-600">Técnicas práticas para lidar melhor com a pressão do dia a dia.</p>
+        </div>
     </div>
     
     <div class="mt-20 bg-indigo-100 p-8 rounded-2xl text-center">
@@ -43,7 +68,7 @@
 <!-- Tags,imagem -->
 <div class="relative h-[60vh] bg-fixed bg-center bg-cover flex items-center justify-center" style='background-image: url("{{ asset("img/nature.jpg") }}");'>
 
-    <div class="absolute inset-0 bg-white/30 backdrop-blur-md z-0"></div>
+    <div class="absolute inset-0 bg-white/30 backdrop-blur-md z-0" id="comeco"></div>
 
     <div class="relative z-10 bg-white bg-opacity-80 p-10 rounded-2xl shadow-xl max-w-2xl w-full text-center">
         <h2 class="text-2xl font-bold text-indigo-800 mb-4">🌱 Escolha suas áreas de interesse</h2>
@@ -57,7 +82,7 @@
             <!-- Todas as tags -->
             <div id="all-tags" class="h-40 overflow-y-auto flex flex-wrap justify-center gap-3">
                 @php
-                $tags = ['Meditação', 'Mindfulness', 'Autoconhecimento', 'Respiração', 'Ansiedade', 'Falta de Sono'];
+                $tags = ['Meditação', 'Mindfulness', 'Autoconhecimento', 'Respiração', 'Ansiedade', 'Falta de Sono','luto','relacionamentos','autocompaixão'];
                 @endphp                
                 
                 @foreach ($tags as $tag)
@@ -78,38 +103,96 @@
 
 @php
 $cards = [
-    [
-        'imagem' => 'autoestima.png',
-        'titulo' => 'Autoestima',
-        'descricao' => 'Dicas e reflexões para melhorar sua autoestima.',
-    ],
-    [
-        'imagem' => 'ansiedade.png',
-        'titulo' => 'Ansiedade',
-        'descricao' => 'Técnicas para lidar com momentos de ansiedade.',
-    ],
-    [
-        'imagem' => 'sono.png',
-        'titulo' => 'Qualidade do Sono',
-        'descricao' => 'Rotinas e hábitos para dormir melhor.',
-    ],
+    ['imagem' => 'autoestima.png', 'titulo' => 'Autoestima', 'descricao' => 'Dicas e reflexões para melhorar sua autoestima.'],
+    ['imagem' => 'ansiedade.png', 'titulo' => 'Ansiedade', 'descricao' => 'Técnicas para lidar com momentos de ansiedade.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
+    // ... (repita ou adicione até 36 se quiser 3 abas cheias)
 ];
+
+$cardsPorPagina = 12;
+$paginas = array_chunk($cards, $cardsPorPagina);
 @endphp
 
+<div x-data="{ aba: 0 }" class="w-full p-3">
+    <!-- Abas -->
+    <div class="flex space-x-2 mb-4 justify-center">
+        @foreach ($paginas as $index => $pagina)
+            <button
+                class="px-4 py-2 rounded-full text-white"
+                :class="{ 'bg-indigo-600': aba === {{ $index }}, 'bg-indigo-300': aba !== {{ $index }} }"
+                @click="aba = {{ $index }}"
+            >
+                {{ $index + 1 }}
+            </button>
+        @endforeach
+    </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    @foreach ($cards as $card)
-        <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
-            <div class="h-40 bg-indigo-100 flex items-center justify-center">
-                <img src="{{ asset('img/cards/' . $card['imagem']) }}" alt="{{ $card['titulo'] }}" class="h-full object-contain">
-            </div>
-            <div class="p-4 text-center">
-                <h3 class="text-lg font-semibold text-indigo-800">{{ $card['titulo'] }}</h3>
-                <p class="text-gray-600 text-sm mt-2">{{ $card['descricao'] }}</p>
-            </div>
+    <!-- Conteúdo das abas -->
+    @foreach ($paginas as $index => $pagina)
+        <div x-show="aba === {{ $index }}" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-3">
+            @foreach ($pagina as $card)
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+                    <div class="h-40 bg-indigo-100 flex items-center justify-center">
+                        <img src="{{ asset('img/cards/' . $card['imagem']) }}" alt="{{ $card['titulo'] }}" class="h-full object-contain">
+                    </div>
+                    <div class="p-4 text-center">
+                        <h3 class="text-lg font-semibold text-indigo-800">{{ $card['titulo'] }}</h3>
+                        <p class="text-gray-600 text-sm mt-2">{{ $card['descricao'] }}</p>
+                    </div>
+                </div>
+            @endforeach
         </div>
     @endforeach
 </div>
+
+<footer class="bg-indigo-900 text-white mt-10">
+    <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Sobre o projeto -->
+        <div>
+            <h4 class="text-lg font-semibold mb-3">Sobre o Projeto</h4>
+            <p class="text-sm text-indigo-100">
+                Este projeto tem como objetivo oferecer apoio psicológico e promover o autoconhecimento por meio de recursos visuais e informativos acessíveis.
+            </p>
+        </div>
+
+        <!-- Contato -->
+        <div>
+            <h4 class="text-lg font-semibold mb-3">Contato</h4>
+            <p class="text-sm text-indigo-100">Email: contato@ajudamental.com</p>
+            <p class="text-sm text-indigo-100">WhatsApp: (47) 99999-9999</p>
+        </div>
+
+        <!-- Redes Sociais -->
+        <div>
+            <h4 class="text-lg font-semibold mb-3">Siga-nos</h4>
+            <div class="flex space-x-4">
+                <a href="#" class="hover:text-indigo-300 transition">Instagram</a>
+                <a href="#" class="hover:text-indigo-300 transition">Facebook</a>
+                <a href="#" class="hover:text-indigo-300 transition">LinkedIn</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center text-sm text-indigo-200 border-t border-indigo-700 py-4">
+        &copy; {{ date('Y') }} Ajuda Mental. Todos os direitos reservados.
+    </div>
+</footer>
+
 
 
 @push('scripts')
