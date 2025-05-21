@@ -103,6 +103,7 @@
 
 
 <div x-data="{ aba: 0 }" class="w-full p-3">
+
     <!-- Botões das abas -->
     <div class="flex space-x-2 mb-4 justify-center">
         @foreach ($paginas as $index => $pagina)
@@ -116,19 +117,63 @@
         @endforeach
     </div>
 
+    <!-- Cards dentro da aba -->
     @foreach ($paginas as $index => $pagina)
         <div x-show="aba === {{ $index }}" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-3" x-cloak>
+            
             @foreach ($pagina as $card)
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
-                    <div class="h-40 bg-indigo-100 flex items-center justify-center">
-                        <img src="{{ asset('img/' . $card->image) }}" alt="{{ $card->titulo }}">
+                <div x-data="{ open: false }" class="relative">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition active:scale-95 cursor-pointer" @click="open = true">
+
+                        <div class="h-40 bg-indigo-100 flex items-center justify-center">
+                            <img src="/img/{{ $card['imagem'] }}" alt="Imagem do card" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-4 text-center">
+                            <h3 class="text-lg font-semibold text-indigo-800">{{ $card->titulo }}</h3>
+                            <p class="text-gray-600 text-sm mt-2">{{ $card->descricao }}</p>
+                        </div>
                     </div>
-                    <div class="p-4 text-center">
-                        <h3 class="text-lg font-semibold text-indigo-800">{{ $card->titulo }}</h3>
-                        <p class="text-gray-600 text-sm mt-2">{{ $card->descricao }}</p>
+
+                    <div 
+                        class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+                        x-show="open"
+                        x-transition
+                        x-cloak
+                    >
+
+                        <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-lg relative text-center">
+
+                            <div class="w-full h-64">
+                                <img 
+                                    src="/img/{{ $card['imagem'] }}" 
+                                    alt="Imagem do card" 
+                                    class="w-full h-full object-cover rounded-t-lg"
+                                >
+                            </div>
+
+                            <button 
+                                class="absolute top-2 right-2 text-red-700 hover:text-black text-4xl font-bold"
+                                @click="open = false"
+                            >
+                                &times;
+                            </button>
+
+                            <div class="p-6">
+                                <h2 class="text-2xl font-bold mb-2 text-indigo-800">
+                                    {{ $card->titulo }}
+                                </h2>
+
+                                <p class="text-gray-600">
+                                    {{ $card->conteudo }}
+                                </p>
+                            </div>
+                        </div>
                     </div>
+
+                    
                 </div>
             @endforeach
+
         </div>
     @endforeach
 
