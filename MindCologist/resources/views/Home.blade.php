@@ -101,33 +101,6 @@
     </div>
 </div>
 
-@php
-$cards = [
-    ['imagem' => 'autoestima.png', 'titulo' => 'Autoestima', 'descricao' => 'Dicas e reflexões para melhorar sua autoestima.'],
-    ['imagem' => 'ansiedade.png', 'titulo' => 'Ansiedade', 'descricao' => 'Técnicas para lidar com momentos de ansiedade.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    ['imagem' => 'sono.png', 'titulo' => 'Qualidade do Sono', 'descricao' => 'Rotinas e hábitos para dormir melhor.'],
-    // ... (repita ou adicione até 36 se quiser 3 abas cheias)
-];
-
-$cardsPorPagina = 12;
-$paginas = array_chunk($cards, $cardsPorPagina);
-@endphp
-
 <div x-data="{ aba: 0 }" class="w-full p-3">
     <!-- Abas -->
     <div class="flex space-x-2 mb-4 justify-center">
@@ -148,17 +121,18 @@ $paginas = array_chunk($cards, $cardsPorPagina);
             @foreach ($pagina as $card)
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
                     <div class="h-40 bg-indigo-100 flex items-center justify-center">
-                        <img src="{{ asset('img/cards/' . $card['imagem']) }}" alt="{{ $card['titulo'] }}" class="h-full object-contain">
+                        <img src="{{ asset('img/cards/' . $card->imagem) }}" alt="{{ $card->titulo }}" class="h-full object-contain">
                     </div>
                     <div class="p-4 text-center">
-                        <h3 class="text-lg font-semibold text-indigo-800">{{ $card['titulo'] }}</h3>
-                        <p class="text-gray-600 text-sm mt-2">{{ $card['descricao'] }}</p>
+                        <h3 class="text-lg font-semibold text-indigo-800">{{ $card->titulo }}</h3>
+                        <p class="text-gray-600 text-sm mt-2">{{ $card->descricao }}</p>
                     </div>
                 </div>
             @endforeach
         </div>
     @endforeach
 </div>
+
 
 <footer class="bg-indigo-900 text-white mt-10">
     <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
