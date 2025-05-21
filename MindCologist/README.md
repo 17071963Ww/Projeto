@@ -1,3 +1,19 @@
+Arrumar projeto
+
+- composer install
+- npm install
+
+- barrumar o .emv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nome_do_banco
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
+
+- php artisan key:generate
+- php artisan migrate
+
 banco de dados ajustar com
 
 INSERT INTO cards (titulo, descricao, image) VALUES 
