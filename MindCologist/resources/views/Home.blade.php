@@ -101,8 +101,9 @@
     </div>
 </div>
 
+
 <div x-data="{ aba: 0 }" class="w-full p-3">
-    <!-- Abas -->
+    <!-- Botões das abas -->
     <div class="flex space-x-2 mb-4 justify-center">
         @foreach ($paginas as $index => $pagina)
             <button
@@ -115,13 +116,12 @@
         @endforeach
     </div>
 
-    <!-- Conteúdo das abas -->
     @foreach ($paginas as $index => $pagina)
-        <div x-show="aba === {{ $index }}" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-3">
+        <div x-show="aba === {{ $index }}" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-3" x-cloak>
             @foreach ($pagina as $card)
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
                     <div class="h-40 bg-indigo-100 flex items-center justify-center">
-                        <img src="{{ asset('img/cards/' . $card->imagem) }}" alt="{{ $card->titulo }}" class="h-full object-contain">
+                        <img src="{{ asset('img/' . $card->image) }}" alt="{{ $card->titulo }}">
                     </div>
                     <div class="p-4 text-center">
                         <h3 class="text-lg font-semibold text-indigo-800">{{ $card->titulo }}</h3>
@@ -131,8 +131,9 @@
             @endforeach
         </div>
     @endforeach
-</div>
 
+
+</div>
 
 <footer class="bg-indigo-900 text-white mt-10">
     <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -147,7 +148,7 @@
         <!-- Contato -->
         <div>
             <h4 class="text-lg font-semibold mb-3">Contato</h4>
-            <p class="text-sm text-indigo-100">Email: contato@ajudamental.com</p>
+            <p class="text-sm text-indigo-100">Email: contato@Mindcologist.com</p>
             <p class="text-sm text-indigo-100">WhatsApp: (47) 99999-9999</p>
         </div>
 
@@ -160,14 +161,13 @@
                 <a href="#" class="hover:text-indigo-300 transition">LinkedIn</a>
             </div>
         </div>
+
     </div>
 
     <div class="text-center text-sm text-indigo-200 border-t border-indigo-700 py-4">
-        &copy; {{ date('Y') }} Ajuda Mental. Todos os direitos reservados.
+        &copy; {{ date('Y') }} Mindcologist. Todos os direitos reservados.
     </div>
 </footer>
-
-
 
 @push('scripts')
     @vite('resources/js/home.js')
