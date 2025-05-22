@@ -31,8 +31,8 @@
     <main>
         @yield('conteudo')
     </main>
-
     {{-- Scripts comuns --}}
+    
     @vite('resources/js/app.js')
 
     {{-- Scripts específicos da view --}}

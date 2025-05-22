@@ -143,7 +143,7 @@
 
                         <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-lg relative text-center">
 
-                            <div class="w-full h-64">
+                            <div class="w-full h-72">
                                 <img 
                                     src="/img/{{ $card['imagem'] }}" 
                                     alt="Imagem do card" 
@@ -201,9 +201,9 @@
         <div>
             <h4 class="text-lg font-semibold mb-3">Siga-nos</h4>
             <div class="flex space-x-4">
-                <a href="#" class="hover:text-indigo-300 transition">Instagram</a>
-                <a href="#" class="hover:text-indigo-300 transition">Facebook</a>
-                <a href="#" class="hover:text-indigo-300 transition">LinkedIn</a>
+                <a href="https://www.instagram.com.br" class="hover:text-indigo-300 transition" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.facebook.com.br" class="hover:text-indigo-300 transition" target="_blank" rel="noopener">Facebook</a>
+                <a href="https://www.linkedin.com.br" class="hover:text-indigo-300 transition" target="_blank" rel="noopener">LinkedIn</a>
             </div>
         </div>
 
