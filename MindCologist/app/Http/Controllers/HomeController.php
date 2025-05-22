@@ -10,6 +10,6 @@ class HomeController extends Controller
     {
         $cards = Card::all();        
         $paginas = $cards->chunk(12); 
-        return \view('home', compact('paginas'));
+        return \view('home', compact('paginas '));
     }
-}
+} 
