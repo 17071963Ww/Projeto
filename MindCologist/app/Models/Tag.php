@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Card extends Model
+class Tag extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['titulo', 'descricao', 'image'];
+    protected $fillable = ['nome'];
 
-    public function tags()
+    public function cards()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Card::class);
     }
 }
