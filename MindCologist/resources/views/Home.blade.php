@@ -78,25 +78,15 @@
         <div id="tags-component" class="space-y-6">
              
             <div id="selected-tags" class="flex flex-wrap justify-center gap-3 min-h-[2rem] transition-all duration-300"></div>
-        
+                    
             <!-- Todas as tags -->
             <div id="all-tags" class="h-40 overflow-y-auto flex flex-wrap justify-center gap-3">
-                @php
-                $tags = ['Meditação', 'Mindfulness', 'Autoconhecimento', 'Respiração', 'Ansiedade', 'Falta de Sono','luto','relacionamentos','autocompaixão'];
-                @endphp                
-                
                 @foreach ($tags as $tag)
-                <span class="tag px-4 py-2 bg-indigo-100 text-indigo-800 rounded-xl cursor-pointer transition duration-300 hover:bg-indigo-200 h-10" data-tag="{{ $tag }}">
-                    {{ $tag }}
-                </span>
+                    <span class="tag px-4 py-2 bg-indigo-100 text-indigo-800 rounded-xl cursor-pointer transition duration-300 hover:bg-indigo-200 h-10" data-tag="{{ $tag->nome }}">
+                        {{ $tag->nome }}
+                    </span>
                 @endforeach
-            </div>
-
-            <div id="accept-button-wrapper" class="flex justify-center mt-4 opacity-0 scale-90 transition duration-300 pointer-events-none">
-                <button class="bg-indigo-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">
-                    Aceitar Seleção
-                </button>
-            </div>
+            </div>    
         </div>
     </div>
 </div>

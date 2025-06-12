@@ -16,6 +16,17 @@ DB_PASSWORD=sua_senha
 
 banco de dados ajustar com
 
+INSERT INTO tags (nome, created_at, updated_at) VALUES
+('Meditação', NOW(), NOW()),
+('Mindfulness', NOW(), NOW()),
+('Autoconhecimento', NOW(), NOW()),
+('Respiração', NOW(), NOW()),
+('Ansiedade', NOW(), NOW()),
+('Falta de Sono', NOW(), NOW()),
+('Luto', NOW(), NOW()),
+('Relacionamentos', NOW(), NOW()),
+('Autocompaixão', NOW(), NOW());
+
 INSERT INTO cards (titulo, descricao, conteudo, imagem) VALUES
 (' Meditação', 
  'Prática milenar que equilibra corpo e mente, promovendo foco e calma.',
@@ -131,3 +142,24 @@ Dicas para criar limites:
 - Reconheça que preservar seus limites é um ato de amor-próprio.
 
 Limites bem definidos ajudam a viver com mais equilíbrio e respeito.');
+
+INSERT INTO card_tag (card_id, tag_id) VALUES
+  (1, 1),
+  (1, 2),
+  (2, 3),
+  (2, 9),
+  (3, 4),
+  (4, 5),
+  (4, 9),
+  (5, 2),
+  (5, 3),
+  (6, 6),
+  (7, 9),
+  (7, 3),
+  (8, 8),
+  (8, 5),
+  (9, 8),
+  (9, 9),
+  (11, 3),
+  (11, 9),
+  (12, 9);
