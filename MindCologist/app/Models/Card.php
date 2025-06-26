@@ -9,7 +9,7 @@ class Card extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['titulo', 'descricao', 'image'];
+    protected $fillable = ['título', 'imagem', 'descricao', 'conteudo'];
 
     public function tags()
     {

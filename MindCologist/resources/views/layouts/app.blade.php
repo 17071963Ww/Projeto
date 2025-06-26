@@ -21,8 +21,7 @@
             </a>
             <nav class="space-x-6 text-gray-600 font-medium text-sm">
                 <a href="{{ url('/') }}" class="hover:text-indigo-600 transition">Início</a>
-                <a href="#" class="hover:text-indigo-600 transition">Sobre</a>
-                <a href="#" class="hover:text-indigo-600 transition">Contato</a>
+                <a href="{{ url('/admin') }}" class="hover:text-indigo-600 transition">Admin</a>
             </nav>
         </div>
     </header>

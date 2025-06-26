@@ -4,11 +4,21 @@
 @section('conteudo')
 <script src="//unpkg.com/alpinejs" defer></script>
 
-<div x-data="{ aba: 'tags' }" class="max-w-6xl mx-auto px-6 py-10">
+<div x-data="{ 
+    aba: 'tags',
+    editingCard: null,
+    formData: {
+        titulo: '',
+        image: '',
+        arquivo_imagem: null,
+        descricao: '',
+        conteudo: '',
+        tags: []
+    }
+}" class="max-w-6xl mx-auto px-6 py-10">
 
-    <!-- Abas -->
     <div class="flex space-x-4 mb-6">
-        <button @click="aba = 'tags'"
+        <button @click="aba = 'tags'; editingCard = null"
             :class="aba === 'tags' ? 'bg-indigo-600 text-white' : 'bg-indigo-100 text-indigo-700'"
             class="px-4 py-2 rounded-xl font-semibold transition">
             Tags
@@ -20,11 +30,10 @@
         </button>
     </div>
 
-    <!-- ABA DE TAGS (CRUD COMPLETO) -->
     <div x-show="aba === 'tags'" x-cloak>
         <h2 class="text-xl font-bold text-indigo-800 mb-4">Gerenciar Tags</h2>
 
-        <!-- Formulário de Criação -->
+
         <form method="POST" action="{{ route('admin.tags.store') }}" class="bg-white p-6 rounded-lg shadow mb-8">
             @csrf
             <h3 class="text-lg font-semibold mb-4">Adicionar Nova Tag</h3>
@@ -36,7 +45,7 @@
             </div>
         </form>
 
-        <!-- Lista de Tags -->
+    
         <div class="bg-white rounded-lg shadow overflow-hidden">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -52,7 +61,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $tag->id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $tag->nome }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <!-- Formulário de Edição (simplificado) -->
+                          
                             <form method="POST" action="{{ route('admin.tags.update', $tag) }}" class="inline">
                                 @csrf
                                 @method('PUT')
@@ -60,7 +69,7 @@
                                 <button type="submit" class="ml-2 text-indigo-600 hover:text-indigo-900">Atualizar</button>
                             </form>
                             
-                            <!-- Formulário de Exclusão -->
+                        
                             <form method="POST" action="{{ route('admin.tags.destroy', $tag) }}" class="inline ml-2">
                                 @csrf
                                 @method('DELETE')
@@ -74,67 +83,114 @@
         </div>
     </div>
 
-    <!-- ABA DE CARDS (CRUD COMPLETO) -->
     <div x-show="aba === 'cards'" x-cloak>
         <h2 class="text-xl font-bold text-indigo-800 mb-4">Gerenciar Cards</h2>
 
-        <!-- Formulário de Criação -->
-        <form method="POST" action="{{ route('admin.cards.store') }}" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow mb-8">
-            @csrf
-            <h3 class="text-lg font-semibold mb-4">Adicionar Novo Card</h3>
+
+        <form 
+            x-bind:action="editingCard ? '/admin/cards/' + editingCard.id : '/admin/cards'"
+            method="POST" 
+            enctype="multipart/form-data"
+            class="bg-white p-6 rounded-lg shadow mb-8"
+            @submit.prevent="
+                const form = $event.target;
+                const formData = new FormData(form);
+                
+                if (editingCard) {
+                    formData.append('_method', 'PUT');
+                }
+                
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    }
+                });
+            "
+        >
+            <h3 class="text-lg font-semibold mb-4" x-text="editingCard ? 'Editar Card' : 'Adicionar Novo Card'"></h3>
+            
+            <input type="hidden" name="_method" x-bind:value="editingCard ? 'PUT' : 'POST'">
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Título</label>
-                    <input type="text" name="titulo" class="border rounded px-4 py-2 w-full" required>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome da Imagem (com extensão)</label>
-                    <input type="text" name="image" placeholder="exemplo.png" class="border rounded px-4 py-2 w-full" required>
-                </div>
-                
-                <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Arquivo da Imagem</label>
-                    <input type="file" name="arquivo_imagem" accept="image/*" class="border rounded px-4 py-2 w-full" required>
+                    <input type="file" name="arquivo_imagem" class="border rounded px-4 py-2 w-full" x-ref="fileInput">
+                    <p class="text-xs text-gray-500 mt-1" x-show="editingCard">Deixe em branco para manter a imagem atual</p>
+                    <template x-if="editingCard">
+                        <div class="mt-2">
+                            <span class="text-sm font-medium text-gray-700">Imagem Atual:</span>
+                            <img x-bind:src="'/img/' + editingCard.imagem" alt="Imagem atual" class="h-20 mt-1 border rounded">
+                        </div>
+                    </template>
                 </div>
+
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Tags</label>
                     <div class="flex flex-wrap gap-2 border rounded p-2">
                         @foreach($tags as $tag)
                             <label class="flex items-center space-x-1">
-                                <input type="checkbox" name="tags[]" value="{{ $tag->id }}">
+                                <input type="checkbox" name="tags[]" value="{{ $tag->id }}" 
+                                       x-model="formData.tags" x-bind:checked="formData.tags.includes({{ $tag->id }})">
                                 <span>{{ $tag->nome }}</span>
                             </label>
-                        @endforeach
-                    </div>
-                </div>
-                
+                            @endforeach
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Título</label>
+                            <input type="text" name="titulo" x-model="formData.titulo" class="border rounded px-4 py-2 w-full" required>
+                        </div>                        
+                        
+                        
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
-                    <textarea name="descricao" class="border rounded px-4 py-2 w-full" required></textarea>
+                    <textarea name="descricao" x-model="formData.descricao" class="border rounded px-4 py-2 w-full" required></textarea>
                 </div>
                 
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Conteúdo</label>
-                    <textarea name="conteudo" class="border rounded px-4 py-2 w-full" required></textarea>
+                    <textarea name="conteudo" x-model="formData.conteudo" class="border rounded px-4 py-2 w-full" required></textarea>
                 </div>
             </div>
             
-            <button type="submit" class="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-xl">Salvar Card</button>
+            <div class="flex justify-end space-x-3 mt-6">
+                <button type="button" @click="editingCard = null; formData = {
+                    titulo: '',
+                    image: '',
+                    arquivo_imagem: null,
+                    descricao: '',
+                    conteudo: '',
+                    tags: []
+                }; $refs.fileInput.value = ''" 
+                    x-show="editingCard"
+                    class="px-4 py-2 border rounded-lg">
+                    Cancelar
+                </button>
+                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg">
+                    <span x-text="editingCard ? 'Atualizar Card' : 'Salvar Card'"></span>
+                </button>
+            </div>
         </form>
 
-        <!-- Lista de Cards -->
+
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @foreach($cards as $card)
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
-                    <!-- Imagem do card -->
+                    
                     <div class="h-40 bg-indigo-100 flex items-center justify-center">
                         <img src="{{ asset('img/' . $card->imagem) }}" alt="Imagem do card" class="w-full h-full object-cover">
                     </div>
                     
-                    <!-- Informações do card -->
+                    
                     <div class="p-4 space-y-2">
                         <div class="text-xs text-gray-500">
                             <span class="font-semibold">ID:</span> {{ $card->id }}
@@ -145,19 +201,34 @@
                         </div>
                         
                         <div class="text-sm text-gray-600 break-all">
-                            <span class="font-semibold">Arquivo:</span> {{ $card->imagem }}
+                            {{ pathinfo($card->imagem, PATHINFO_FILENAME) }}
                         </div>
                         
-                        <div class="text-sm text-gray-700">
+                        <div class="text-sm text-gray-700 line-clamp-2">
                             {{ $card->desercioso }}
                         </div>
                         
-                        <!-- Botões de Ação -->
                         <div class="flex justify-between mt-3">
-                            <!-- Editar -->
-                            <a href="{{ route('admin.cards.edit', $card) }}" class="text-indigo-600 hover:text-indigo-900 text-sm">Editar</a>
+                            <button @click="
+                                editingCard = {
+                                    id: {{ $card->id }},
+                                    título: `{{ addslashes($card->titulo) }}`, 
+                                    imagem: `{{ $card->imagem }}`,
+                                    descricao: `{{ addslashes($card->descricao) }}`,
+                                    conteudo: `{{ addslashes($card->conteudo) }}`,
+                                    tags: {{ json_encode($card->tags->pluck('id')) }}
+                                };
+                                formData = {
+                                    titulo: editingCard.título,  
+                                    descricao: editingCard.descricao,
+                                    conteudo: editingCard.conteudo,
+                                    tags: editingCard.tags
+                                };
+                                $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                            " class="text-indigo-600 hover:text-indigo-900 text-sm">
+                                Editar
+                            </button>
                             
-                            <!-- Excluir -->
                             <form method="POST" action="{{ route('admin.cards.destroy', $card) }}">
                                 @csrf
                                 @method('DELETE')
