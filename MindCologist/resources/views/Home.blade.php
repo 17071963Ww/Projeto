@@ -43,70 +43,131 @@
                 this.selectedTags.push(tag);
             }
         },
+        removeTag(tag) {
+            this.selectedTags = this.selectedTags.filter(t => t !== tag);
+        },
         isCardVisible(cardTags) {
             if (this.selectedTags.length === 0) return true;
             return this.selectedTags.some(tag => cardTags.includes(tag));
         }
     }"
 >
+    <!-- SEÇÃO DE TAGS -->
+    <div class="relative h-[60vh] bg-fixed bg-center bg-cover flex items-center justify-center" style='background-image: url("{{ asset("img/nature.jpg") }}");' id="comeco">
 
+        <div class="absolute inset-0 bg-white/30 backdrop-blur-md z-0"></div>
 
+        <div class="relative z-10 bg-white bg-opacity-80 p-10 rounded-2xl shadow-xl max-w-2xl w-full text-center">
+            <h2 class="text-2xl font-bold text-indigo-800 mb-4">🌱 Escolha suas áreas de interesse</h2>
+            <p class="text-gray-700 mb-6">Você pode selecionar múltiplas opções. Clique na tag acima para removê‑la.</p>
 
+            <div id="tags-component" class="space-y-6">
 
-<!-- Seção das Tags -->
-<div x-data="{
-    selectedTags: [],
-    toggleTag(tag) {
-        if (this.selectedTags.includes(tag)) {
-            this.selectedTags = this.selectedTags.filter(t => t !== tag);
-        } else {
-            this.selectedTags.push(tag);
-        }
-    },
-    removeTag(tag) {
-        this.selectedTags = this.selectedTags.filter(t => t !== tag);
-    }
-}" class="relative h-[60vh] bg-fixed bg-center bg-cover flex items-center justify-center" style='background-image: url("{{ asset("img/nature.jpg") }}");' id="comeco">
+                <!-- Tags selecionadas -->
+                <div class="flex flex-wrap justify-center gap-3 mb-4">
+                    <template x-if="selectedTags.length === 0">
+                        <span class="text-gray-500">Nenhuma tag selecionada</span>
+                    </template>
 
-  <div class="absolute inset-0 bg-white/30 backdrop-blur-md z-0"></div>
+                    <template x-for="tag in selectedTags" :key="tag">
+                        <span 
+                            class="flex items-center bg-indigo-600 text-white px-4 py-2 rounded-xl cursor-pointer transition hover:bg-indigo-700"
+                            @click="removeTag(tag)"
+                        >
+                            <span x-text="tag"></span>
+                            <span class="ml-2">&times;</span>
+                        </span>
+                    </template>
+                </div>
 
-  <div class="relative z-10 bg-white bg-opacity-80 p-10 rounded-2xl shadow-xl max-w-2xl w-full text-center">
-    <h2 class="text-2xl font-bold text-indigo-800 mb-4">🌱 Escolha suas áreas de interesse</h2>
-    <p class="text-gray-700 mb-6">Você pode selecionar múltiplas opções. Clique na tag acima para removê‑la.</p>
+                <!-- Todas as tags -->
+                <div class="h-40 overflow-auto flex flex-wrap justify-center gap-3">
+                    @foreach ($tags as $tag)
+                        <span 
+                            class="px-4 py-2 bg-indigo-100 text-indigo-800 rounded-xl cursor-pointer transition hover:bg-indigo-200"
+                            :class="selectedTags.includes({{ json_encode($tag->nome) }}) ? 'bg-indigo-600 text-white' : ''"
+                            @click="toggleTag({{ json_encode($tag->nome) }})"
+                        >
+                            {{ $tag->nome }}
+                        </span>
+                    @endforeach
+                </div>
 
-    <div id="tags-component" class="space-y-6">
+            </div>
+        </div>
+    </div>
 
-      <!-- Tags selecionadas ou mensagem -->
-      <div class="flex flex-wrap justify-center gap-3 mb-4">
-        <!-- Mensagem quando não há tags -->
-        <template x-if="selectedTags.length === 0">
-          <span class="text-gray-500">Nenhuma tag selecionada</span>
-        </template>
+    <!-- ABAS E CARDS -->
+    <div class="w-full p-3">
 
-        <!-- Renderiza somente as tags existentes -->
-        <template x-for="tag in selectedTags" :key="tag">
-          <span 
-            class="flex items-center bg-indigo-600 text-white px-4 py-2 rounded-xl cursor-pointer transition hover:bg-indigo-700"
-            @click="removeTag(tag)"
-          >
-            <span x-text="tag"></span>
-            <span class="ml-2">&times;</span>
-          </span>
-        </template>
-      </div>
+        <!-- Botões das abas -->
+        <div class="flex space-x-2 mb-4 justify-center">
+            @foreach ($paginas as $index => $pagina)
+                <button
+                    class="px-4 py-2 rounded-full text-white"
+                    :class="{ 'bg-indigo-600': aba === {{ $index }}, 'bg-indigo-300': aba !== {{ $index }} }"
+                    @click="aba = {{ $index }}"
+                >
+                    {{ $index + 1 }}
+                </button>
+            @endforeach
+        </div>
 
-      <!-- Todas as tags -->
-      <div id="all-tags" class="h-40 overflow-auto flex flex-wrap justify-center gap-3">
-        @foreach ($tags as $tag)
-          <span 
-            class="px-4 py-2 bg-indigo-100 text-indigo-800 rounded-xl cursor-pointer transition hover:bg-indigo-200"
-            :class="selectedTags.includes('{{ $tag->nome }}') ? 'bg-indigo-600 text-white' : ''"
-            @click="toggleTag('{{ $tag->nome }}')"
-          >
-            {{ $tag->nome }}
-          </span>
+        <!-- Cards por aba -->
+        @foreach ($paginas as $index => $pagina)
+            <div x-show="aba === {{ $index }}" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-3" x-cloak>
+
+                @foreach ($pagina as $card)
+                    <div 
+                        x-data="{ open: false }" 
+                        class="relative"
+                        x-show="isCardVisible({{ json_encode($card->tags->pluck('nome')) }})"
+                        x-cloak
+                    >
+                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition active:scale-95 cursor-pointer relative" @click="open = true">
+                            <div class="h-40 bg-indigo-100 flex items-center justify-center">
+                                <img src="/img/{{ $card['imagem'] }}" alt="Imagem do card" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-4 text-center relative">
+                                <h3 class="text-lg font-semibold text-indigo-800">{{ $card->titulo }}</h3>
+                                <p class="text-gray-600 text-sm mt-2">{{ $card->descricao }}</p>
+                                <div class="absolute bottom-1 left-1 flex flex-wrap gap-1 justify-start pointer-events-none" style="font-size: 0.65rem; color: #bbb;">
+                                    @foreach ($card->tags as $tag)
+                                        <span>#{{ $tag->nome }}</span>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div 
+                            class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+                            x-show="open"
+                            x-transition
+                            x-cloak
+                        >
+                            <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-lg relative text-center">
+                                <div class="w-full h-72">
+                                    <img src="/img/{{ $card['imagem'] }}" alt="Imagem do card" class="w-full h-full object-cover rounded-t-lg">
+                                </div>
+                                <button class="absolute top-2 right-2 text-red-700 hover:text-black text-4xl font-bold" @click="open = false">
+                                    &times;
+                                </button>
+                                <div class="p-6">
+                                    <h2 class="text-2xl font-bold mb-2 text-indigo-800">{{ $card->titulo }}</h2>
+                                    <p class="text-gray-600">{{ $card->conteudo }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+            </div>
         @endforeach
-      </div>
+
+    </div>
+</div>
+
 
     </div>
   </div>
