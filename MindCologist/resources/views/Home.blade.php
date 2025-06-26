@@ -5,7 +5,6 @@
 
 <div class="bg-white py-12 px-6">
 
-    <!-- Bem vindo -->
     <div class="max-w-7xl mx-auto text-center">
         <h1 class="text-4xl md:text-5xl font-bold text-indigo-700 mb-4">
             Bem-vindo ao Mindcologist 🧠
@@ -18,9 +17,9 @@
         </a>
     </div>
 
-    <!-- Categorias -->
+    
     <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        <!-- Seus cards fixos -->
+        
     </div>
 
     <div class="mt-20 bg-indigo-100 p-8 rounded-2xl text-center">
@@ -31,7 +30,7 @@
     </div>
 </div>
 
-<!-- Tags e Cards filtráveis -->
+
 <div 
     x-data="{
         aba: 0,
@@ -52,7 +51,7 @@
         }
     }"
 >
-    <!-- SEÇÃO DE TAGS -->
+    
     <div class="relative h-[60vh] bg-fixed bg-center bg-cover flex items-center justify-center" style='background-image: url("{{ asset("img/nature.jpg") }}");' id="comeco">
 
         <div class="absolute inset-0 bg-white/30 backdrop-blur-md z-0"></div>
@@ -63,7 +62,7 @@
 
             <div id="tags-component" class="space-y-6">
 
-                <!-- Tags selecionadas -->
+                
                 <div class="flex flex-wrap justify-center gap-3 mb-4">
                     <template x-if="selectedTags.length === 0">
                         <span class="text-gray-500">Nenhuma tag selecionada</span>
@@ -80,7 +79,7 @@
                     </template>
                 </div>
 
-                <!-- Todas as tags -->
+                
                 <div class="h-40 overflow-auto flex flex-wrap justify-center gap-3">
                     @foreach ($tags as $tag)
                         <span 
@@ -97,10 +96,10 @@
         </div>
     </div>
 
-    <!-- ABAS E CARDS -->
+    
     <div class="w-full p-3">
 
-        <!-- Botões das abas -->
+        
         <div class="flex space-x-2 mb-4 justify-center">
             @foreach ($paginas as $index => $pagina)
                 <button
@@ -113,7 +112,7 @@
             @endforeach
         </div>
 
-        <!-- Cards por aba -->
+        
         @foreach ($paginas as $index => $pagina)
             <div x-show="aba === {{ $index }}" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-3" x-cloak>
 
@@ -139,7 +138,7 @@
                             </div>
                         </div>
 
-                        <!-- Modal -->
+                        
                         <div 
                             class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
                             x-show="open"
@@ -172,15 +171,10 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-    <!-- Abas e Cards -->
+ 
     <div class="w-full p-3">
 
-        <!-- Botões das abas -->
+        
         <div class="flex space-x-2 mb-4 justify-center">
             @foreach ($paginas as $index => $pagina)
                 <button
@@ -193,7 +187,7 @@
             @endforeach
         </div>
 
-        <!-- Cards dentro da aba -->
+        
         @foreach ($paginas as $index => $pagina)
             <div x-show="aba === {{ $index }}" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-3" x-cloak>
 
@@ -214,7 +208,7 @@
                                 <h3 class="text-lg font-semibold text-indigo-800">{{ $card->titulo }}</h3>
                                 <p class="text-gray-600 text-sm mt-2">{{ $card->descricao }}</p>
 
-                                <!-- Tags pequenas no canto inferior esquerdo -->
+                                
                                 <div class="absolute bottom-1 left-1 flex flex-wrap gap-1 justify-start pointer-events-none" style="font-size: 0.65rem; color: #bbb;">
                                     @if(isset($card->tags) && $card->tags->count() > 0)
                                         @foreach ($card->tags as $tag)
@@ -225,7 +219,7 @@
                             </div>
                         </div>
 
-                        <!-- Modal -->
+                        
                         <div 
                             class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
                             x-show="open"
@@ -273,7 +267,7 @@
 
 <footer class="bg-indigo-900 text-white mt-10">
     <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Sobre o projeto -->
+        
         <div>
             <h4 class="text-lg font-semibold mb-3">Sobre o Projeto</h4>
             <p class="text-sm text-indigo-100">
@@ -281,14 +275,14 @@
             </p>
         </div>
 
-        <!-- Contato -->
+        
         <div>
             <h4 class="text-lg font-semibold mb-3">Contato</h4>
             <p class="text-sm text-indigo-100">Email: contato@Mindcologist.com</p>
             <p class="text-sm text-indigo-100">WhatsApp: (47) 99999-9999</p>
         </div>
 
-        <!-- Redes Sociais -->
+        
         <div>
             <h4 class="text-lg font-semibold mb-3">Siga-nos</h4>
             <div class="flex space-x-4">
